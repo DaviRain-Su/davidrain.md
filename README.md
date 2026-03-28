@@ -1,150 +1,86 @@
-# DavidRain Skill
+# DavidRain 修仙录
 
-个人经验库 Skill - 包含方法论、技术技能和实战经验的可执行知识系统。
-
-## 核心理念
-
-> **经验不是经历，而是对经历的反思。**
-
-这个 Skill 系统分为三个层次：
-
-| 层次 | 问题 | 内容 | 对应目录 |
-|------|------|------|----------|
-| **Principles** | Why? | 思维模式、决策框架、管理哲学 | `principles/` |
-| **Crafts** | How? | 技术技能、工具使用、最佳实践 | `crafts/` |
-| **Experiences** | What? | 实战案例、踩坑记录、复盘总结 | `experiences/` |
-
-## 快速开始
-
-### 使用 Skill
-
-```python
-# 加载主 Skill
-skill_view("davidrain")
-
-# 加载特定子 Skill
-skill_view("elon-musk-methods")    # Elon Musk 方法论
-skill_view("sui-move-patterns")    # Sui Move 开发技巧
-skill_view("hackathon-playbook")   # Hackathon 攻略
-```
-
-### 添加新经验
-
-```bash
-# 1. 创建新 Skill
-python scripts/manage.py --create <skill-name> <category>
-
-# 2. 编辑生成的 SKILL.md
-
-# 3. 更新索引
-python scripts/manage.py --update-index
-
-# 4. 提交
-git add .
-git commit -m "添加 <skill-name> Skill"
-```
-
-## 目录结构
-
-```
-davidrain-skill/
-├── SKILL.md                    # 主入口
-├── INDEX.md                    # 自动生成的索引
-├── README.md                   # 本文件
-│
-├── principles/                 # 方法论（Why）
-│   └── elon-musk-methods/      # Elon Musk 管理哲学
-│       ├── SKILL.md
-│       └── references/
-│
-├── crafts/                     # 技术技能（How）
-│   └── sui-move-patterns/      # Sui Move 开发模式
-│       ├── SKILL.md
-│       ├── references/
-│       └── templates/
-│
-├── experiences/                # 实战经验（What）
-│   └── hackathon-playbook/     # Hackathon 攻略
-│       ├── SKILL.md
-│       ├── references/
-│       └── templates/
-│
-├── scripts/                    # 管理脚本
-│   └── manage.py               # Skill 管理工具
-│
-└── templates/                  # 文件模板
-    └── skill-template.md       # 新 Skill 模板
-```
-
-## 管理脚本
-
-### 更新索引
-```bash
-python scripts/manage.py --update-index
-```
-
-### 验证 Skill 格式
-```bash
-python scripts/manage.py --validate
-```
-
-### 拆分大文档
-```bash
-python scripts/manage.py --split <path/to/SKILL.md>
-```
-
-### 创建新 Skill
-```bash
-python scripts/manage.py --create <name> <category>
-# category: principles | crafts | experiences
-```
-
-## 设计原则
-
-### 1. 可执行性
-每个 Skill 必须能直接指导行动，不只是理论知识。
-
-### 2. 模块化
-每个 Skill 独立存在，可以单独加载使用。
-
-### 3. 可验证
-包含检查清单（Checklist）和验证步骤。
-
-### 4. 渐进式
-从简单开始，逐步深化。
-
-## 与 Cloud Code / Cursor 集成
-
-可以在 `.cursorrules` 中添加：
-
-```yaml
-skills:
-  - davidrain
-  - elon-musk-methods
-  - sui-move-patterns
-  - hackathon-playbook
-
-triggers:
-  - pattern: "如何做.*决策"
-    skill: elon-musk-methods
-  - pattern: "Move|合约"
-    skill: sui-move-patterns
-  - pattern: "Hackathon|黑客松"
-    skill: hackathon-playbook
-```
-
-## 贡献
-
-这个 Skill 系统是活的文档：
-
-- 每次项目结束 → 更新 Experiences
-- 每次技术突破 → 更新 Crafts
-- 每次认知升级 → 更新 Principles
-
-## License
-
-MIT
+> 大道独行，吾道不孤
+> 
+> 基于费曼学习法、王阳明心学、道家修行的个人成长体系
 
 ---
 
-*Created by DavidRain*
+## 🗡️ 当前境界
+
+**修炼者**: DavidRain  
+**当前境界**: 第六重·化神境  
+**进度**: 60%  
+**道号**: 待定
+
+```
+第九重：真仙境 ──────────────────────────────── (0%)
+第八重：渡劫境 ──────────────────────────────── (0%)
+第七重：大乘境 ──────────────────────────────── (0%)
+第六重：化神境 ████████████████████████████████░░░░ (60%) ← 你在这里
+第五重：元婴境 ████████████████████████████████████ (100%)
+```
+
+---
+
+## 📚 功法典籍
+
+### Principles（心法）
+| 典籍 | 境界 | 状态 |
+|------|------|------|
+| [cultivation-system](./principles/cultivation-system/SKILL.md) | 体系总纲 | 🔄 持续更新 |
+| [elon-musk-methods](./principles/elon-musk-methods/SKILL.md) | 第六重 | ✅ 已拜师 |
+
+### Crafts（招式）
+| 典籍 | 境界 | 状态 |
+|------|------|------|
+| [sui-move-patterns](./crafts/sui-move-patterns/SKILL.md) | 第五重 | 📖 修炼中 |
+
+### Experiences（实战）
+| 典籍 | 境界 | 状态 |
+|------|------|------|
+| [hackathon-playbook](./experiences/hackathon-playbook/SKILL.md) | 第五重 | 📖 修炼中 |
+
+### Inquiries（待验证）
+待创建...
+
+---
+
+## 🔔 每日督修
+
+已配置 AI 道侣定时提醒：
+
+| 时间 | 功课 | 内容 |
+|------|------|------|
+| 07:00 | 晨功 | 读经 + 立愿 |
+| 21:00 | 暮省 | 三省吾身 + 日志 |
+
+**打卡方式**: 回复「晨功毕」「暮省毕」
+
+---
+
+## 📝 今日功课
+
+1. **晨功** (07:00): 读 cultivation-system 第一章
+2. **日课** (09:00): 用 elon-musk-methods 做决策
+3. **暮省** (21:00): 写 daily-logs/2026-03-28.md
+
+---
+
+## 🔧 工具
+
+```bash
+# 添加新功法
+python scripts/manage.py --create <name> <category>
+
+# 生成索引
+python scripts/manage.py --update-index
+
+# 举行拜师仪式
+# 复制 templates/disciple-ceremony.md 并填写
+```
+
+---
+
+*创立时间: 2026-03-28*  
+*创立者: DavidRain*

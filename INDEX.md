@@ -1,6 +1,6 @@
 # DavidRain Skill 索引
 
-> 自动生成于 2026-03-28 08:28:02
+> 自动生成于 2026-03-28 08:56:12
 
 ## 快速导航
 
@@ -8,6 +8,7 @@
 
 | Skill | 描述 | 版本 |
 |-------|------|------|
+| [cultivation-system](./principles/cultivation-system/SKILL.md) | DavidRain 修仙体系 - 基于费曼学习法、王阳明心学、道家修行的个人成长方法论... | 1.0.0 |
 | [elon-musk-methods](./principles/elon-musk-methods/SKILL.md) | Elon Musk 管理哲学与工程方法论 - 包含第一性原理、The Algorithm、团队管理等... | 1.0.0 |
 
 ### Crafts（技术技能）
