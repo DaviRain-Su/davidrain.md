@@ -1,0 +1,200 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "secret": "",
+      "default_mode": "rule"
+    }
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns-local",
+        "address": "udp://114.114.114.114",
+        "detour": "direct-out"
+      },
+      {
+        "tag": "google",
+        "address": "https://8.8.8.8/dns-query"
+      }
+    ],
+    "rules": [
+      {
+        "query_type": ["HTTPS", "PTR", "SRV", "TXT"],
+        "action": "reject"
+      },
+      {
+        "rule_set": "geosite-cn",
+        "server": "dns-local"
+      },
+      {
+        "rule_set": "geoip-cn",
+        "server": "dns-local"
+      }
+    ],
+    "final": "google"
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "0.0.0.0",
+      "listen_port": 7897
+    },
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "address": [
+        "172.19.16.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "system",
+      "auto_redirect": true,
+      "route_exclude_address": [
+        "192.168.0.0/16",
+        "10.0.0.0/8",
+        "172.16.0.0/12"
+      ]
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct-out"
+    },
+    {
+      "type": "selector",
+      "tag": "proxy",
+      "outbounds": ["proxy-1", "proxy-2", "direct-out"]
+    },
+    {
+      "_comment": "示例 Shadowsocks 节点 - 请替换为你的服务器信息",
+      "type": "shadowsocks",
+      "tag": "proxy-1",
+      "server": "YOUR_SERVER_IP",
+      "server_port": 8388,
+      "method": "aes-256-gcm",
+      "password": "YOUR_PASSWORD"
+    },
+    {
+      "_comment": "示例 VMess 节点 - 请替换为你的服务器信息",
+      "type": "vmess",
+      "tag": "proxy-2",
+      "server": "YOUR_SERVER_IP",
+      "server_port": 443,
+      "uuid": "YOUR_UUID",
+      "security": "auto",
+      "alter_id": 0
+    },
+    {
+      "type": "selector",
+      "tag": "proxy-hk",
+      "outbounds": ["proxy-1", "proxy-2", "direct-out"]
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "domain_suffix": [
+          "tailscale.com",
+          "tailscale.io",
+          "ts.net",
+          "speedtest.net",
+          ".chime.aws",
+          ".local",
+          "factory.ai",
+          "okx.com",
+          "bitget.com",
+          "binance.com",
+          "bitgetapps.com"
+        ],
+        "action": "route",
+        "outbound": "direct-out"
+      },
+      {
+        "ip_cidr": [
+          "100.64.0.0/10",
+          "fd7a:115c:a1e0::/48"
+        ],
+        "action": "route",
+        "outbound": "direct-out"
+      },
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "direct-out"
+      },
+      {
+        "rule_set": "geosite-cn",
+        "action": "route",
+        "outbound": "direct-out"
+      },
+      {
+        "rule_set": "geoip-cn",
+        "action": "route",
+        "outbound": "direct-out"
+      },
+      {
+        "domain_suffix": [
+          "claude.ai",
+          "claude.com",
+          "anthropic.com",
+          "chatgpt.com",
+          "openai.com",
+          "grok.com",
+          "google.com",
+          "googleapis.com",
+          "x.ai",
+          "slack.com",
+          "manus.im",
+          "intercom.com",
+          "posthog.com",
+          "wisprflow.ai",
+          "linear.app",
+          "gumloop.com",
+          "granola.ai",
+          "ampcode.com",
+          "typeless.com",
+          "rudderstack.com",
+          "typeless-static.com",
+          "verisoul.ai",
+          "alchemy.com"
+        ],
+        "action": "route",
+        "outbound": "proxy"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "geosite-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs"
+      },
+      {
+        "tag": "geoip-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://cdn.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs"
+      }
+    ],
+    "final": "proxy-hk",
+    "auto_detect_interface": true
+  }
+}
