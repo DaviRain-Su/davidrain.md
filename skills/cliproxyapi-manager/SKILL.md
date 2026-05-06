@@ -265,6 +265,27 @@ openai-compatibility:
       - api-key: "sk-or-v1-..."
 ```
 
+#### Kimi (Moonshot) 配置
+
+Kimi 通过 OpenAI 兼容接口接入：
+
+```yaml
+openai-compatibility:
+  - name: "kimi"
+    base-url: "https://api.moonshot.cn/v1"
+    api-key-entries:
+      - api-key: "sk-kimi-..."
+    models:
+      - name: "moonshot-v1-8k"
+        alias: "kimi-8k"
+      - name: "moonshot-v1-32k"
+        alias: "kimi-32k"
+      - name: "moonshot-v1-128k"
+        alias: "kimi-128k"
+```
+
+**注意**: Kimi API Key 需要是有效的，否则会出现 `Invalid Authentication` 错误。
+
 ### 代理设置
 
 通过 sing-box 或其他代理：
