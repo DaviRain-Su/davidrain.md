@@ -249,8 +249,55 @@ cp cliproxyapi ~/.local/bin/
 systemctl --user restart cliproxyapi
 ```
 
+## Factory CLI (Droid) 代理支持
+
+Factory CLI 的命令名是 `droid`，安装方式：
+
+```bash
+curl -fsSL https://app.factory.ai/cli | sh
+```
+
+### 证书验证错误修复
+
+如果遇到 `unknown certificate verification error`，使用代理启动脚本：
+
+```bash
+# 使用代理启动 droid
+source ~/.pi/agent/skills/cliproxyapi-manager/droid-proxy.sh
+
+# 或直接运行
+cd ~/.pi/agent/skills/cliproxyapi-manager
+./droid-proxy.sh
+
+# 登录
+droid login
+```
+
+脚本会自动设置代理环境变量：
+- `http_proxy=http://127.0.0.1:7897`
+- `https_proxy=http://127.0.0.1:7897`
+
+### 永久设置（推荐）
+
+在 `~/.bashrc` 或 `~/.zshrc` 中添加：
+
+```bash
+# Factory CLI 代理
+export http_proxy=http://127.0.0.1:7897
+export https_proxy=http://127.0.0.1:7897
+export HTTP_PROXY=http://127.0.0.1:7897
+export HTTPS_PROXY=http://127.0.0.1:7897
+```
+
+然后重新加载配置：
+
+```bash
+source ~/.bashrc  # 或 source ~/.zshrc
+```
+
 ## 参考
 
 - [CLIProxyAPI 文档](https://help.router-for.me/)
 - [CLIProxyAPI GitHub](https://github.com/router-for-me/CLIProxyAPI)
 - [Codex 配置文档](https://help.router-for.me/configuration/provider/codex.html)
+- [Factory CLI](https://app.factory.ai/)
