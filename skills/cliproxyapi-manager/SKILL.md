@@ -183,12 +183,39 @@ curl http://127.0.0.1:8317/v1/chat/completions \
 
 ### 多账号负载均衡
 
-配置多个 OAuth 账号或 API Key，自动轮询：
+CLIProxyAPI 支持多账号自动轮询负载均衡，无需额外配置，只需多次 OAuth 登录即可。
+
+#### OAuth 多账号（推荐）
+
+每次运行登录命令，使用不同的账号：
+
+```bash
+# 登录第一个 OpenAI 账号
+cliproxyapi -config ~/.cli-proxy-api/config.yaml -codex-login
+
+# 登录第二个 OpenAI 账号（不同邮箱）
+cliproxyapi -config ~/.cli-proxy-api/config.yaml -codex-login
+
+# 登录第三个 OpenAI 账号
+cliproxyapi -config ~/.cli-proxy-api/config.yaml -codex-login
+```
+
+每次登录会生成一个新的认证文件：
+- `~/.cli-proxy-api/codex-user1@email.com-pro.json`
+- `~/.cli-proxy-api/codex-user2@email.com-pro.json`
+- `~/.cli-proxy-api/codex-user3@email.com-pro.json`
+
+服务会自动检测并加载所有认证文件，请求时自动轮询。
+
+#### 查看已登录账号
+
+```bash
+ls ~/.cli-proxy-api/codex-*.json
+```
+
+#### API Key 多账号
 
 ```yaml
-# 多个 Codex OAuth 账号（通过多次登录生成）
-# 文件保存在 ~/.cli-proxy-api/codex-*.json
-
 # 多个 Gemini API Key
 gemini-api-key:
   - api-key: "AIzaSy...01"
@@ -198,6 +225,44 @@ gemini-api-key:
 claude-api-key:
   - api-key: "sk-ant-...01"
   - api-key: "sk-ant-...02"
+
+# 多个 Codex API Key
+codex-api-key:
+  - api-key: "sk-atSM...01"
+  - api-key: "sk-atSM...02"
+```
+
+#### 路由策略
+
+```yaml
+routing:
+  strategy: "round-robin"  # 轮询 (默认)
+  # strategy: "fill-first"  # 优先填满第一个账号
+  session-affinity: false   # 会话保持（同一客户端固定用同一账号）
+  session-affinity-ttl: "1h"  # 会话绑定保留时间
+```
+
+#### 混合多提供商
+
+可以同时配置多个提供商，自动故障转移：
+
+```yaml
+# OAuth 账号（自动加载 ~/.cli-proxy-api/ 下的认证文件）
+# + Gemini API Key
+# + Claude API Key
+# + OpenRouter 兼容提供商
+
+gemini-api-key:
+  - api-key: "AIzaSy...01"
+
+claude-api-key:
+  - api-key: "sk-ant-...01"
+
+openai-compatibility:
+  - name: "openrouter"
+    base-url: "https://openrouter.ai/api/v1"
+    api-key-entries:
+      - api-key: "sk-or-v1-..."
 ```
 
 ### 代理设置
