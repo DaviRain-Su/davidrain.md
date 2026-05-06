@@ -282,11 +282,13 @@ droid login
 在 `~/.bashrc` 或 `~/.zshrc` 中添加：
 
 ```bash
-# Factory CLI 代理
+# Proxy settings (sing-box)
 export http_proxy=http://127.0.0.1:7897
 export https_proxy=http://127.0.0.1:7897
 export HTTP_PROXY=http://127.0.0.1:7897
 export HTTPS_PROXY=http://127.0.0.1:7897
+export ALL_PROXY=socks5://127.0.0.1:7897
+export NO_PROXY="localhost,127.0.0.1,::1,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12"
 ```
 
 然后重新加载配置：
@@ -294,6 +296,10 @@ export HTTPS_PROXY=http://127.0.0.1:7897
 ```bash
 source ~/.bashrc  # 或 source ~/.zshrc
 ```
+
+**NO_PROXY 说明**：
+- `localhost`, `127.0.0.1`, `::1` - 本地地址不走代理
+- `192.168.0.0/16`, `10.0.0.0/8`, `172.16.0.0/12` - 局域网地址不走代理
 
 ## 参考
 
