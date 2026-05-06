@@ -265,9 +265,32 @@ openai-compatibility:
       - api-key: "sk-or-v1-..."
 ```
 
-#### Kimi (Moonshot) 配置
+#### Kimi for Coding 配置
 
-Kimi 通过 OpenAI 兼容接口接入：
+Kimi for Coding 使用特殊的 API 端点，**仅限 Coding Agent 使用**（如 Kimi CLI、Claude Code、Roo Code 等）：
+
+```yaml
+openai-compatibility:
+  - name: "kimi-coding"
+    base-url: "https://api.kimi.com/coding/v1"
+    headers:
+      User-Agent: "claude-cli/2.1.44 (external, sdk-cli)"
+    api-key-entries:
+      - api-key: "sk-kimi-..."
+    models:
+      - name: "kimi-for-coding"
+        alias: "kimi-coding"
+```
+
+**关键区别**:
+- 普通 Kimi API: `https://api.moonshot.cn/v1`
+- Kimi for Coding: `https://api.kimi.com/coding/v1`
+- 需要设置特定的 `User-Agent` 头才能访问
+- 仅限 Coding Agent 使用，直接 API 调用会返回 `access_terminated_error`
+
+#### 普通 Kimi (Moonshot) 配置
+
+如果需要使用普通 Kimi API：
 
 ```yaml
 openai-compatibility:
@@ -283,8 +306,6 @@ openai-compatibility:
       - name: "moonshot-v1-128k"
         alias: "kimi-128k"
 ```
-
-**注意**: Kimi API Key 需要是有效的，否则会出现 `Invalid Authentication` 错误。
 
 ### 代理设置
 
